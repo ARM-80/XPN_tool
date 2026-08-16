@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <main className="app">
-      <div className="segmented" role="group" aria-label="App view">
+      <div className="view-tabs" role="group" aria-label="App view">
         <button type="button" aria-pressed={view === "explore"} onClick={() => setView("explore")}>
           Explore
         </button>

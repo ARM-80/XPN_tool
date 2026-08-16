@@ -13,8 +13,7 @@ interface TransformLinksProps {
 
 export function TransformLinks({ links, current, onSelect }: TransformLinksProps) {
   return (
-    <section className="panel">
-      <h2 className="panel-title">Direct transforms</h2>
+    <section>
       <div className="transform-links">
         {links.map((link) => (
           <button

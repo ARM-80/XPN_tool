@@ -48,7 +48,7 @@ export function AutoClassList({ info }: AutoClassListProps) {
         <button
           key={item.key}
           type="button"
-          className="auto-item"
+          className="auto-row"
           aria-expanded={openKey === item.key}
           onClick={() => setOpenKey((current) => (current === item.key ? null : item.key))}
         >

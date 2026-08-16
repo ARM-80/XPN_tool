@@ -4,12 +4,13 @@ interface GridEditorProps {
   grid: Grid;
   onToggle?: (row: number, col: number) => void;
   readOnly?: boolean;
+  large?: boolean;
 }
 
-export function GridEditor({ grid, onToggle, readOnly = false }: GridEditorProps) {
+export function GridEditor({ grid, onToggle, readOnly = false, large = false }: GridEditorProps) {
   return (
     <div
-      className="grid-editor"
+      className={large ? "grid-editor dominant" : "grid-editor"}
       style={{ gridTemplateColumns: `repeat(${grid.size}, 1fr)` }}
     >
       {grid.cells.map((row, rowIndex) =>
