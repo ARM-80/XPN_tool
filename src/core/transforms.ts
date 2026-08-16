@@ -1,4 +1,4 @@
-import { type Grid, exactId, gridToMask } from "./grid";
+import { type Grid, exactId, gridsEqual, gridToMask } from "./grid";
 
 function mapCells(grid: Grid, read: (row: number, col: number) => 0 | 1): Grid {
   const n = grid.size;
@@ -102,4 +102,74 @@ export function canonicalRotationId(grid: Grid): string {
 
 export function canonicalDihedralId(grid: Grid): string {
   return exactId(dihedralOrbit(grid)[0]);
+}
+
+export type DirectTransformId =
+  | "rotate90"
+  | "rotate180"
+  | "rotate270"
+  | "reflectLeftRight"
+  | "reflectTopBottom"
+  | "reflectMainDiagonal"
+  | "reflectAntiDiagonal";
+
+export const DIRECT_TRANSFORM_IDS: readonly DirectTransformId[] = [
+  "rotate90",
+  "rotate180",
+  "rotate270",
+  "reflectLeftRight",
+  "reflectTopBottom",
+  "reflectMainDiagonal",
+  "reflectAntiDiagonal",
+];
+
+export const DIRECT_TRANSFORMS: Record<DirectTransformId, (grid: Grid) => Grid> = {
+  rotate90,
+  rotate180,
+  rotate270,
+  reflectLeftRight,
+  reflectTopBottom,
+  reflectMainDiagonal,
+  reflectAntiDiagonal,
+};
+
+export const DIRECT_TRANSFORM_LABELS: Record<DirectTransformId, string> = {
+  rotate90: "Rotate 90°",
+  rotate180: "Rotate 180°",
+  rotate270: "Rotate 270°",
+  reflectLeftRight: "Reflect left/right",
+  reflectTopBottom: "Reflect top/bottom",
+  reflectMainDiagonal: "Reflect main diagonal",
+  reflectAntiDiagonal: "Reflect anti-diagonal",
+};
+
+export interface TransformLink {
+  grid: Grid;
+  labels: DirectTransformId[];
+}
+
+export function transformRelationsBetween(a: Grid, b: Grid): DirectTransformId[] {
+  if (a.size !== b.size) {
+    return [];
+  }
+  return DIRECT_TRANSFORM_IDS.filter((id) => gridsEqual(DIRECT_TRANSFORMS[id](a), b));
+}
+
+export function transformLinksFrom(grid: Grid): TransformLink[] {
+  const links: TransformLink[] = [];
+  const indexById = new Map<string, number>();
+
+  for (const id of DIRECT_TRANSFORM_IDS) {
+    const result = DIRECT_TRANSFORMS[id](grid);
+    const resultId = exactId(result);
+    const existing = indexById.get(resultId);
+    if (existing !== undefined) {
+      links[existing].labels.push(id);
+      continue;
+    }
+    indexById.set(resultId, links.length);
+    links.push({ grid: result, labels: [id] });
+  }
+
+  return links;
 }

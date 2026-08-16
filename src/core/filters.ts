@@ -1,6 +1,12 @@
 import { type Classification, classify } from "./classify";
 import { type Grid, type GridSize, allGrids, parseExactId } from "./grid";
-import { type ClassMode, classId } from "./relationships";
+import {
+  type ClassMode,
+  type RelationQuery,
+  classId,
+  emptyRelationQuery,
+  matchesAnchorRelations,
+} from "./relationships";
 
 export type ConnectivityFilter = "connected" | "disconnected" | "empty";
 export type CenterFilter = "occupied" | "empty" | "na";
@@ -128,8 +134,18 @@ export function browseUniverse(
   universe: ClassifiedArrangement[],
   filters: ArrangementFilters,
   mode: ClassMode,
+  relationQuery: RelationQuery = emptyRelationQuery(),
+  anchor?: ClassifiedArrangement["info"],
 ): BrowseResult {
-  const matching = filterUniverse(universe, filters);
+  const matching = universe.filter((item) => {
+    if (!matchesFilters(item.info, filters)) {
+      return false;
+    }
+    if (!anchor || relationQuery.relations.length === 0) {
+      return true;
+    }
+    return matchesAnchorRelations(anchor, item.info, relationQuery);
+  });
   const displayed = collapseClasses(matching, mode);
   return {
     matching,

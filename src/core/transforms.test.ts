@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { allGrids, createGrid, exactId, gridsEqual } from "./grid";
 import {
+  DIRECT_TRANSFORM_IDS,
   SQUARE_SYMMETRY_TRANSFORMS,
   canonicalDihedralId,
   canonicalRotationId,
@@ -13,6 +14,8 @@ import {
   rotate270,
   rotate90,
   rotationOrbit,
+  transformLinksFrom,
+  transformRelationsBetween,
 } from "./transforms";
 
 const SAMPLE = createGrid(3, [
@@ -203,5 +206,50 @@ describe("exhaustive 3x3 classification", () => {
     expect(new Set(allGrids(3).map(exactId)).size).toBe(512);
     expect(rotationIds.size).toBe(140);
     expect(dihedralIds.size).toBe(102);
+  });
+});
+
+describe("direct transform relations", () => {
+  it("names all seven non-identity transforms that map A to B", () => {
+    expect(transformRelationsBetween(SAMPLE, rotate90(SAMPLE))).toEqual(["rotate90"]);
+    expect(transformRelationsBetween(SAMPLE, rotate180(SAMPLE))).toEqual(["rotate180"]);
+    expect(transformRelationsBetween(SAMPLE, rotate270(SAMPLE))).toEqual(["rotate270"]);
+    expect(transformRelationsBetween(SAMPLE, reflectLeftRight(SAMPLE))).toEqual(["reflectLeftRight"]);
+    expect(transformRelationsBetween(SAMPLE, reflectTopBottom(SAMPLE))).toEqual(["reflectTopBottom"]);
+    expect(transformRelationsBetween(SAMPLE, reflectMainDiagonal(SAMPLE))).toEqual([
+      "reflectMainDiagonal",
+    ]);
+    expect(transformRelationsBetween(SAMPLE, reflectAntiDiagonal(SAMPLE))).toEqual([
+      "reflectAntiDiagonal",
+    ]);
+  });
+
+  it("keeps one card per exact result and retains every applicable label", () => {
+    const plus = createGrid(3, [
+      [0, 1, 0],
+      [1, 1, 1],
+      [0, 1, 0],
+    ]);
+    const plusLinks = transformLinksFrom(plus);
+    expect(plusLinks).toHaveLength(1);
+    expect(plusLinks[0].labels).toEqual([...DIRECT_TRANSFORM_IDS]);
+    expect(gridsEqual(plusLinks[0].grid, plus)).toBe(true);
+
+    const sampleLinks = transformLinksFrom(SAMPLE);
+    expect(sampleLinks).toHaveLength(7);
+    expect(new Set(sampleLinks.map((link) => exactId(link.grid))).size).toBe(7);
+    expect(sampleLinks.every((link) => link.labels.length === 1)).toBe(true);
+    expect(sampleLinks.flatMap((link) => link.labels).sort()).toEqual([...DIRECT_TRANSFORM_IDS].sort());
+
+    const topPair = createGrid(3, [
+      [1, 0, 1],
+      [0, 0, 0],
+      [0, 0, 0],
+    ]);
+    const topLinks = transformLinksFrom(topPair);
+    expect(new Set(topLinks.map((link) => exactId(link.grid))).size).toBe(topLinks.length);
+    const self = topLinks.find((link) => gridsEqual(link.grid, topPair));
+    expect(self?.labels).toContain("reflectLeftRight");
+    expect(transformRelationsBetween(topPair, topPair)).toEqual(self?.labels);
   });
 });
