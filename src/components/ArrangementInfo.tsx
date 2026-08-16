@@ -14,7 +14,7 @@ export function ArrangementInfo({ info }: ArrangementInfoProps) {
         {info.occupancy} / {info.occupancy + info.empty}
       </dd>
       <dt>Connected</dt>
-      <dd>{info.connected ? "Yes" : "No"}</dd>
+      <dd>{info.connected === null ? "—" : info.connected ? "Yes" : "No"}</dd>
       <dt>Components</dt>
       <dd>{info.components}</dd>
       <dt>Rotation class ID</dt>

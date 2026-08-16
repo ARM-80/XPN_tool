@@ -6,9 +6,9 @@ import {
   canonicalRotationId,
   dihedralOrbit,
   reflectAntiDiagonal,
-  reflectHorizontal,
+  reflectLeftRight,
   reflectMainDiagonal,
-  reflectVertical,
+  reflectTopBottom,
   rotate180,
   rotate270,
   rotate90,
@@ -51,12 +51,12 @@ describe("rotations", () => {
 
 describe("reflections", () => {
   it("applies the four square reflections", () => {
-    expect(reflectHorizontal(SAMPLE).cells).toEqual([
+    expect(reflectLeftRight(SAMPLE).cells).toEqual([
       [0, 1, 1],
       [0, 0, 0],
       [1, 0, 0],
     ]);
-    expect(reflectVertical(SAMPLE).cells).toEqual([
+    expect(reflectTopBottom(SAMPLE).cells).toEqual([
       [0, 0, 1],
       [0, 0, 0],
       [1, 1, 0],
@@ -74,8 +74,8 @@ describe("reflections", () => {
   });
 
   it("is an involution for every reflection", () => {
-    expect(reflectHorizontal(reflectHorizontal(SAMPLE))).toEqual(SAMPLE);
-    expect(reflectVertical(reflectVertical(SAMPLE))).toEqual(SAMPLE);
+    expect(reflectLeftRight(reflectLeftRight(SAMPLE))).toEqual(SAMPLE);
+    expect(reflectTopBottom(reflectTopBottom(SAMPLE))).toEqual(SAMPLE);
     expect(reflectMainDiagonal(reflectMainDiagonal(SAMPLE))).toEqual(SAMPLE);
     expect(reflectAntiDiagonal(reflectAntiDiagonal(SAMPLE))).toEqual(SAMPLE);
   });
@@ -158,7 +158,7 @@ describe("orbits and canonical IDs", () => {
     ]);
     expect(rotationOrbit(topPair)).toHaveLength(4);
     expect(dihedralOrbit(topPair)).toHaveLength(4);
-    expect(gridsEqual(topPair, reflectHorizontal(topPair))).toBe(true);
+    expect(gridsEqual(topPair, reflectLeftRight(topPair))).toBe(true);
   });
 });
 
@@ -199,8 +199,9 @@ describe("exhaustive 3x3 classification", () => {
       }
     }
 
-    expect(rotationIds.size).toBeGreaterThan(0);
-    expect(dihedralIds.size).toBeGreaterThan(0);
-    expect(dihedralIds.size).toBeLessThanOrEqual(rotationIds.size);
+    expect(allGrids(3)).toHaveLength(512);
+    expect(new Set(allGrids(3).map(exactId)).size).toBe(512);
+    expect(rotationIds.size).toBe(140);
+    expect(dihedralIds.size).toBe(102);
   });
 });

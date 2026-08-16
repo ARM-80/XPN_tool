@@ -31,13 +31,13 @@ export function rotate270(grid: Grid): Grid {
 }
 
 /** Mirror across the vertical axis (left-right flip). */
-export function reflectHorizontal(grid: Grid): Grid {
+export function reflectLeftRight(grid: Grid): Grid {
   const n = grid.size;
   return mapCells(grid, (row, col) => grid.cells[row][n - 1 - col]);
 }
 
 /** Mirror across the horizontal axis (top-bottom flip). */
-export function reflectVertical(grid: Grid): Grid {
+export function reflectTopBottom(grid: Grid): Grid {
   const n = grid.size;
   return mapCells(grid, (row, col) => grid.cells[n - 1 - row][col]);
 }
@@ -56,8 +56,8 @@ export function reflectAntiDiagonal(grid: Grid): Grid {
 export const ROTATION_TRANSFORMS = [rotate90, rotate180, rotate270] as const;
 
 export const REFLECTION_TRANSFORMS = [
-  reflectHorizontal,
-  reflectVertical,
+  reflectLeftRight,
+  reflectTopBottom,
   reflectMainDiagonal,
   reflectAntiDiagonal,
 ] as const;
@@ -68,8 +68,8 @@ export const SQUARE_SYMMETRY_TRANSFORMS = [
   rotate90,
   rotate180,
   rotate270,
-  reflectHorizontal,
-  reflectVertical,
+  reflectLeftRight,
+  reflectTopBottom,
   reflectMainDiagonal,
   reflectAntiDiagonal,
 ] as const;

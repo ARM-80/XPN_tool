@@ -44,7 +44,8 @@ describe("connectivity", () => {
   it("counts orthogonal components and connectedness", () => {
     const empty = classify(createEmptyGrid(3));
     expect(empty.components).toBe(0);
-    expect(empty.connected).toBe(true);
+    expect(empty.occupancy).toBe(0);
+    expect(empty.connected).toBeNull();
     expect(componentCount(createEmptyGrid(3))).toBe(0);
 
     const full = classify(createFullGrid(3));

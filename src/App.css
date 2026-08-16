@@ -143,3 +143,146 @@
   background: var(--occupied);
   border-color: var(--occupied);
 }
+
+.filters-button,
+.expand-button,
+.sheet-clear,
+.sheet-header button {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  padding: 12px;
+}
+
+.filters-button,
+.expand-button {
+  background: var(--accent);
+  color: #fffdf7;
+  border-color: var(--accent);
+}
+
+.expand-button {
+  margin-bottom: 12px;
+}
+
+.summary {
+  display: grid;
+  gap: 4px;
+}
+
+.summary div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+}
+
+.summary strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 48px;
+  padding: 10px 6px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  font-size: 0.95rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.result-card[aria-current="true"] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.result-thumb {
+  width: 72px;
+  height: 72px;
+}
+
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: rgba(28, 27, 24, 0.4);
+}
+
+.sheet {
+  width: min(430px, 100%);
+  max-height: 86dvh;
+  overflow: auto;
+  background: var(--panel);
+  border-radius: 20px 20px 0 0;
+  padding: 16px 16px max(24px, env(safe-area-inset-bottom));
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sheet-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.sheet-header button {
+  width: auto;
+  min-width: 88px;
+}
+
+.filter-group {
+  margin-bottom: 16px;
+}
+
+.filter-group h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-chips button {
+  min-height: 48px;
+  min-width: 48px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--empty);
+}
+
+.filter-chips button[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fffdf7;
+  border-color: var(--accent);
+}
+
+.sheet-clear {
+  margin-top: 8px;
+}

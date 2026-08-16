@@ -17,7 +17,7 @@ export interface Classification {
   centerOccupied: boolean | null;
   cornerOccupiedCount: number;
   edgeOccupiedCount: number;
-  connected: boolean;
+  connected: boolean | null;
   components: number;
   rotationOrbitSize: number;
   dihedralOrbitSize: number;
@@ -123,7 +123,7 @@ export function classify(grid: Grid): Classification {
     centerOccupied,
     cornerOccupiedCount,
     edgeOccupiedCount,
-    connected: components <= 1,
+    connected: occupied === 0 ? null : components === 1,
     components,
     rotationOrbitSize: rotationOrbit(grid).length,
     dihedralOrbitSize: dihedralOrbit(grid).length,
