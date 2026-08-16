@@ -1,26 +1,18 @@
-import { useState } from "react";
-import { ExploreMode } from "./explore/ExploreMode";
-import { ReviewMode } from "./review/ReviewMode";
+import { Tabletop } from "./tabletop/Tabletop";
+import { useBoardStore } from "./tabletop/useBoardStore";
 import { useResearchStore } from "./review/useResearchStore";
 import "./App.css";
 
-type AppView = "explore" | "review";
-
 export default function App() {
-  const [view, setView] = useState<AppView>("explore");
-  const [store, setStore] = useResearchStore();
+  const [board, setBoard] = useBoardStore();
+  const [research, setResearch] = useResearchStore();
 
   return (
-    <main className="app">
-      <div className="view-tabs" role="group" aria-label="App view">
-        <button type="button" aria-pressed={view === "explore"} onClick={() => setView("explore")}>
-          Explore
-        </button>
-        <button type="button" aria-pressed={view === "review"} onClick={() => setView("review")}>
-          Review
-        </button>
-      </div>
-      {view === "explore" ? <ExploreMode /> : <ReviewMode store={store} onChange={setStore} />}
-    </main>
+    <Tabletop
+      board={board}
+      research={research}
+      onBoard={setBoard}
+      onResearch={setResearch}
+    />
   );
 }
