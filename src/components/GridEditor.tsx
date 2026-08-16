@@ -2,10 +2,11 @@ import type { Grid } from "../core/grid";
 
 interface GridEditorProps {
   grid: Grid;
-  onToggle: (row: number, col: number) => void;
+  onToggle?: (row: number, col: number) => void;
+  readOnly?: boolean;
 }
 
-export function GridEditor({ grid, onToggle }: GridEditorProps) {
+export function GridEditor({ grid, onToggle, readOnly = false }: GridEditorProps) {
   return (
     <div
       className="grid-editor"
@@ -17,8 +18,13 @@ export function GridEditor({ grid, onToggle }: GridEditorProps) {
             key={`${rowIndex}-${colIndex}`}
             type="button"
             className={cell === 1 ? "occupied" : undefined}
+            disabled={readOnly}
             aria-label={`Cell ${rowIndex + 1}, ${colIndex + 1}, ${cell === 1 ? "occupied" : "empty"}`}
-            onClick={() => onToggle(rowIndex, colIndex)}
+            onClick={() => {
+              if (!readOnly) {
+                onToggle?.(rowIndex, colIndex);
+              }
+            }}
           />
         )),
       )}
