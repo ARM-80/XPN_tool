@@ -1,0 +1,23 @@
+{
+  "name": "XPN_tool",
+  "short_name": "XPN_tool",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#f4f2ec",
+  "theme_color": "#f4f2ec",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

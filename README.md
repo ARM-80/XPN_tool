@@ -42,6 +42,7 @@ It must **not** infer that a difference is a Need, nor encode decay, repulsion, 
 npm install
 npm run dev
 npm test
+npm run build
 ```
 
 ## Near-term milestones

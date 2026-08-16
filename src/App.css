@@ -1,0 +1,145 @@
+.app {
+  width: min(430px, 100%);
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px
+    max(24px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+}
+
+.segmented {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+}
+
+.segmented button,
+.info dt,
+.info dd {
+  min-height: 48px;
+}
+
+.segmented.stack {
+  grid-auto-flow: row;
+}
+
+.segmented button {
+  border: 1px solid var(--line);
+  background: var(--empty);
+  border-radius: 12px;
+  padding: 10px 8px;
+}
+
+.segmented button[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fffdf7;
+  border-color: var(--accent);
+}
+
+.grid-editor {
+  display: grid;
+  gap: 10px;
+  width: min(100%, 320px);
+  margin: 0 auto;
+  aspect-ratio: 1;
+}
+
+.grid-editor button {
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: var(--empty);
+  padding: 0;
+}
+
+.grid-editor button.occupied {
+  background: var(--occupied);
+  border-color: var(--occupied);
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  margin: 0;
+}
+
+.info dt {
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+
+.info dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: 600;
+}
+
+.members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.members button {
+  width: 72px;
+  height: 72px;
+  padding: 8px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.members button[aria-current="true"] {
+  border-color: var(--accent);
+  background: var(--selected);
+}
+
+.mini-grid {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+}
+
+.mini-grid span {
+  border-radius: 3px;
+  background: var(--empty);
+  border: 1px solid var(--line);
+}
+
+.mini-grid span.occupied {
+  background: var(--occupied);
+  border-color: var(--occupied);
+}
