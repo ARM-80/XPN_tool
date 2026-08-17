@@ -22,6 +22,18 @@ src/
 
 The mathematical/core layer must remain independent of React so the research model can change without rewriting the UI.
 
+## Formal transform model
+
+The arrangement engine realizes the eight rotations and reflections of the square as the dihedral group (D_4). The earlier paired-axis mirror algebra is preserved as its axial Klein four-group subgroup.
+
+See [Mirror-Transformation Algebra](docs/mirror-transformation-algebra.md) for:
+
+- the formal (X_1/X_2,Y_1/Y_2) positional bridge;
+- the complete (D_4) presentation and axial (V_4) subgroup;
+- orbit and canonical-class definitions;
+- the Burnside derivation of the 512 / 140 / 102 class counts;
+- explicit evidence, interpretation boundaries, and falsification criteria.
+
 ## Research boundary
 
 For now, the app may classify what is directly observable from the grid:
