@@ -1,4 +1,5 @@
 import type { BoardLink, LinkDirection } from "../core/board";
+import { DIRECT_TRANSFORM_LABELS } from "../core/transforms";
 
 interface LinkEditorProps {
   link: BoardLink;
@@ -37,26 +38,35 @@ export function LinkEditor({
             Close
           </button>
         </header>
-        <label className="field">
-          <span>Label</span>
-          <input value={link.label ?? ""} onChange={(event) => onLabel(event.target.value)} />
-        </label>
+        {link.transformId ? (
+          <p className="field">
+            <span>Transformation</span>
+            <span className="field-value">{DIRECT_TRANSFORM_LABELS[link.transformId]}</span>
+          </p>
+        ) : (
+          <label className="field">
+            <span>Label</span>
+            <input value={link.label ?? ""} onChange={(event) => onLabel(event.target.value)} />
+          </label>
+        )}
         <label className="field">
           <span>Note</span>
           <textarea rows={3} value={link.note ?? ""} onChange={(event) => onNote(event.target.value)} />
         </label>
-        <div className="chip-list">
-          {DIRECTIONS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              aria-pressed={link.direction === item.id}
-              onClick={() => onDirection(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+        {!link.transformId && (
+          <div className="chip-list">
+            {DIRECTIONS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-pressed={link.direction === item.id}
+                onClick={() => onDirection(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        )}
         <button type="button" className="sheet-action" onClick={onDelete}>
           Delete link
         </button>

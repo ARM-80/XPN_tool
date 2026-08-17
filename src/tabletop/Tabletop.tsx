@@ -5,6 +5,7 @@ import {
   type BoardStore,
   addCard,
   addLink,
+  applyDirectTransform,
   deserializeBoardStore,
   duplicateCard,
   moveCard,
@@ -24,7 +25,8 @@ import {
   emptyResearchStore,
 } from "../core/research";
 import {
-  DIRECT_TRANSFORMS,
+  DIRECT_TRANSFORM_LABELS,
+  DIRECT_TRANSFORM_SHORT_LABELS,
   type DirectTransformId,
 } from "../core/transforms";
 import { CardInfo } from "./CardInfo";
@@ -190,12 +192,10 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
   }
 
   function applyTransform(cardId: string, transformId: DirectTransformId) {
-    const card = cards.find((item) => item.id === cardId);
-    if (!card) {
+    if (!cards.some((item) => item.id === cardId)) {
       return;
     }
-    const nextGrid = DIRECT_TRANSFORMS[transformId](parseExactId(card.exactId));
-    onBoard(addCard(board, exactId(nextGrid), card.x + 36, card.y + 24));
+    onBoard(applyDirectTransform(board, cardId, transformId));
   }
 
   function exportData() {
@@ -278,8 +278,20 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
               const y1 = from.y + CARD / 2;
               const x2 = to.x + CARD / 2;
               const y2 = to.y + CARD / 2;
+              const transformLink = Boolean(item.transformId);
+              const caption = item.transformId
+                ? DIRECT_TRANSFORM_SHORT_LABELS[item.transformId]
+                : item.label;
+              const title = item.transformId
+                ? DIRECT_TRANSFORM_LABELS[item.transformId]
+                : item.label;
               return (
-                <g key={item.id} onClick={() => setLinkId(item.id)}>
+                <g
+                  key={item.id}
+                  className={transformLink ? "transform-link" : undefined}
+                  onClick={() => setLinkId(item.id)}
+                >
+                  {title && <title>{title}</title>}
                   <line x1={x1} y1={y1} x2={x2} y2={y2} className="link-hit" />
                   <line
                     x1={x1}
@@ -287,12 +299,16 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
                     x2={x2}
                     y2={y2}
                     className="link-line"
-                    markerEnd={item.direction === "forward" ? "url(#arrow)" : undefined}
-                    markerStart={item.direction === "backward" ? "url(#arrow)" : undefined}
+                    markerEnd={
+                      transformLink || item.direction !== "forward" ? undefined : "url(#arrow)"
+                    }
+                    markerStart={
+                      transformLink || item.direction !== "backward" ? undefined : "url(#arrow)"
+                    }
                   />
-                  {item.label && (
+                  {caption && (
                     <text x={(x1 + x2) / 2} y={(y1 + y2) / 2 - 8} className="link-label">
-                      {item.label}
+                      {caption}
                     </text>
                   )}
                 </g>

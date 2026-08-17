@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { classifyUniverse, collapseClasses } from "./filters";
-import { createGrid, exactId, occupancy } from "./grid";
+import { createGrid, exactId, occupancy, parseExactId } from "./grid";
 import {
   addCard,
   addLink,
+  applyDirectTransform,
   deserializeBoardStore,
   duplicateCard,
   emptyBoard,
@@ -19,6 +20,11 @@ import {
   setLinkDirection,
   setLinkLabel,
 } from "./board";
+import {
+  DIRECT_TRANSFORM_IDS,
+  DIRECT_TRANSFORMS,
+  transformRelationsBetween,
+} from "./transforms";
 
 const A = exactId(
   createGrid(3, [
@@ -106,6 +112,154 @@ describe("links", () => {
     expect(board.cards).toHaveLength(1);
     expect(board.links).toHaveLength(0);
   });
+
+  it("stores each direct transform ID on a BoardLink", () => {
+    for (const transformId of DIRECT_TRANSFORM_IDS) {
+      let board = addCard(emptyBoard(), A, 0, 0, { id: "c1" });
+      board = addCard(board, B, 80, 0, { id: "c2" });
+      board = addLink(board, "c1", "c2", { id: "l1", transformId });
+      expect(board.links[0].transformId).toBe(transformId);
+    }
+  });
+
+  it("keeps ordinary links valid when transformId is absent", () => {
+    let board = addCard(emptyBoard(), A, 0, 0, { id: "c1" });
+    board = addCard(board, B, 80, 0, { id: "c2" });
+    board = addLink(board, "c1", "c2", { id: "l1", label: "manual" });
+    expect(board.links[0].transformId).toBeUndefined();
+    expect(board.links[0]).toMatchObject({
+      label: "manual",
+      direction: "none",
+      fromCardInstanceId: "c1",
+      toCardInstanceId: "c2",
+    });
+  });
+});
+
+describe("direct transformation pairs", () => {
+  it("creates a new card instance with the transformed exactId", () => {
+    for (const transformId of DIRECT_TRANSFORM_IDS) {
+      const source = addCard(emptyBoard(), A, 10, 20, { id: "c1" });
+      const board = applyDirectTransform(source, "c1", transformId, { x: 136, y: 0 }, {
+        cardId: "c2",
+        linkId: "l1",
+      });
+      const expected = exactId(DIRECT_TRANSFORMS[transformId](parseExactId(A)));
+      expect(board.cards).toHaveLength(2);
+      expect(board.cards[0].id).toBe("c1");
+      expect(board.cards[1]).toMatchObject({ id: "c2", exactId: expected, x: 146, y: 20 });
+      expect(board.cards[1].id).not.toBe("c1");
+    }
+  });
+
+  it("creates exactly one undirected transformation link for the invoked transform", () => {
+    const source = addCard(emptyBoard(), A, 0, 0, { id: "c1" });
+    const board = applyDirectTransform(source, "c1", "reflectLeftRight", undefined, {
+      cardId: "c2",
+      linkId: "l1",
+    });
+    expect(board.links).toHaveLength(1);
+    expect(board.links[0]).toMatchObject({
+      id: "l1",
+      fromCardInstanceId: "c1",
+      toCardInstanceId: "c2",
+      direction: "none",
+      transformId: "reflectLeftRight",
+    });
+    expect(board.links[0].label).toBeUndefined();
+  });
+
+  it("records the transform that was invoked, not every transform that could relate the grids", () => {
+    const empty = exactId(
+      createGrid(3, [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+      ]),
+    );
+    const source = addCard(emptyBoard(), empty, 0, 0, { id: "c1" });
+    const board = applyDirectTransform(source, "c1", "rotate90", undefined, {
+      cardId: "c2",
+      linkId: "l1",
+    });
+    const possible = transformRelationsBetween(parseExactId(empty), parseExactId(empty));
+    expect(possible.length).toBeGreaterThan(1);
+    expect(board.links).toHaveLength(1);
+    expect(board.links[0].transformId).toBe("rotate90");
+  });
+
+  it("still creates a second card and a link when the transform leaves the arrangement unchanged", () => {
+    const empty = exactId(
+      createGrid(3, [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+      ]),
+    );
+    const source = addCard(emptyBoard(), empty, 0, 0, { id: "c1" });
+    const board = applyDirectTransform(source, "c1", "rotate180", undefined, {
+      cardId: "c2",
+      linkId: "l1",
+    });
+    expect(board.cards).toHaveLength(2);
+    expect(board.cards[0].exactId).toBe(empty);
+    expect(board.cards[1].exactId).toBe(empty);
+    expect(board.cards[0].id).not.toBe(board.cards[1].id);
+    expect(board.links).toHaveLength(1);
+    expect(board.links[0]).toMatchObject({
+      fromCardInstanceId: "c1",
+      toCardInstanceId: "c2",
+      transformId: "rotate180",
+      direction: "none",
+    });
+  });
+
+  it("round-trips transformId through serialization", () => {
+    const source = addCard(emptyBoard(), A, 0, 0, { id: "c1" });
+    const board = applyDirectTransform(source, "c1", "reflectMainDiagonal", undefined, {
+      cardId: "c2",
+      linkId: "l1",
+    });
+    const restored = deserializeBoardStore(serializeBoardStore(board));
+    expect(restored).toEqual(board);
+    expect(restored.links[0].transformId).toBe("reflectMainDiagonal");
+  });
+
+  it("rejects malformed transform IDs on import", () => {
+    const payload = {
+      version: 1,
+      cards: [
+        { id: "c1", exactId: A, x: 0, y: 0 },
+        { id: "c2", exactId: B, x: 80, y: 0 },
+      ],
+      links: [
+        {
+          id: "l1",
+          fromCardInstanceId: "c1",
+          toCardInstanceId: "c2",
+          direction: "none",
+          transformId: "rotate45",
+        },
+      ],
+    };
+    expect(() => parseBoardStore(payload)).toThrow(/Invalid transform ID/);
+    expect(() =>
+      parseBoardStore({
+        ...payload,
+        links: [{ ...payload.links[0], transformId: 90 }],
+      }),
+    ).toThrow(/Invalid transform ID/);
+  });
+
+  it("removes the transformation link when either card is removed", () => {
+    const source = addCard(emptyBoard(), A, 0, 0, { id: "c1" });
+    const linked = applyDirectTransform(source, "c1", "rotate270", undefined, {
+      cardId: "c2",
+      linkId: "l1",
+    });
+    expect(removeCard(linked, "c1").links).toHaveLength(0);
+    expect(removeCard(linked, "c2").links).toHaveLength(0);
+  });
 });
 
 describe("board serialization", () => {
@@ -116,6 +270,7 @@ describe("board serialization", () => {
     const json = serializeBoardStore(board);
     expect(deserializeBoardStore(json)).toEqual(board);
     expect(parseBoardStore(JSON.parse(json))).toEqual(board);
+    expect(board.links[0].transformId).toBeUndefined();
   });
 
   it("rejects malformed board data", () => {

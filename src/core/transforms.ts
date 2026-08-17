@@ -143,6 +143,20 @@ export const DIRECT_TRANSFORM_LABELS: Record<DirectTransformId, string> = {
   reflectAntiDiagonal: "Reflect anti-diagonal",
 };
 
+export const DIRECT_TRANSFORM_SHORT_LABELS: Record<DirectTransformId, string> = {
+  rotate90: "R90",
+  rotate180: "R180",
+  rotate270: "R270",
+  reflectLeftRight: "M-LR",
+  reflectTopBottom: "M-TB",
+  reflectMainDiagonal: "M-D",
+  reflectAntiDiagonal: "M-AD",
+};
+
+export function isDirectTransformId(value: string): value is DirectTransformId {
+  return (DIRECT_TRANSFORM_IDS as readonly string[]).includes(value);
+}
+
 export interface TransformLink {
   grid: Grid;
   labels: DirectTransformId[];

@@ -1,4 +1,9 @@
 import { allGrids, exactId, isExactId, occupancy, parseExactId, type Grid } from "./grid";
+import {
+  DIRECT_TRANSFORMS,
+  isDirectTransformId,
+  type DirectTransformId,
+} from "./transforms";
 
 export const BOARD_STORE_VERSION = 1;
 export const BOARD_STORAGE_KEY = "xpn-tool.board.v1";
@@ -21,6 +26,7 @@ export interface BoardLink {
   direction: LinkDirection;
   label?: string;
   note?: string;
+  transformId?: DirectTransformId;
 }
 
 export interface BoardStore {
@@ -170,7 +176,13 @@ export function addLink(
   board: BoardStore,
   fromCardInstanceId: string,
   toCardInstanceId: string,
-  extras: { id?: string; direction?: LinkDirection; label?: string; note?: string } = {},
+  extras: {
+    id?: string;
+    direction?: LinkDirection;
+    label?: string;
+    note?: string;
+    transformId?: DirectTransformId;
+  } = {},
 ): BoardStore {
   if (fromCardInstanceId === toCardInstanceId) {
     throw new Error("A link needs two different cards");
@@ -178,6 +190,9 @@ export function addLink(
   const ids = new Set(board.cards.map((card) => card.id));
   if (!ids.has(fromCardInstanceId) || !ids.has(toCardInstanceId)) {
     throw new Error("Link refers to a missing card");
+  }
+  if (extras.transformId !== undefined && !isDirectTransformId(extras.transformId)) {
+    throw new Error(`Invalid transform ID: ${extras.transformId}`);
   }
   const next = cloneBoard(board);
   const link: BoardLink = {
@@ -194,8 +209,35 @@ export function addLink(
   if (note) {
     link.note = note;
   }
+  if (extras.transformId) {
+    link.transformId = extras.transformId;
+  }
   next.links.push(link);
   return next;
+}
+
+export function applyDirectTransform(
+  board: BoardStore,
+  cardId: string,
+  transformId: DirectTransformId,
+  offset = { x: 136, y: 0 },
+  ids: { cardId?: string; linkId?: string } = {},
+): BoardStore {
+  if (!isDirectTransformId(transformId)) {
+    throw new Error(`Invalid transform ID: ${transformId}`);
+  }
+  const card = board.cards.find((item) => item.id === cardId);
+  if (!card) {
+    throw new Error(`Unknown card: ${cardId}`);
+  }
+  const nextId = ids.cardId ?? newId("card");
+  const nextExactId = exactId(DIRECT_TRANSFORMS[transformId](parseExactId(card.exactId)));
+  const withCard = addCard(board, nextExactId, card.x + offset.x, card.y + offset.y, { id: nextId });
+  return addLink(withCard, card.id, nextId, {
+    id: ids.linkId,
+    direction: "none",
+    transformId,
+  });
 }
 
 export function removeLink(board: BoardStore, linkId: string): BoardStore {
@@ -331,6 +373,12 @@ function parseLink(value: unknown, cardIds: Set<string>): BoardLink {
     if (note) {
       link.note = note;
     }
+  }
+  if (value.transformId !== undefined) {
+    if (typeof value.transformId !== "string" || !isDirectTransformId(value.transformId)) {
+      throw new Error("Invalid transform ID");
+    }
+    link.transformId = value.transformId;
   }
   return link;
 }
