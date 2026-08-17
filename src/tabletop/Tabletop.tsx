@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MiniGrid } from "../components/MiniGrid";
 import { OverflowMenu } from "../components/OverflowMenu";
 import {
@@ -48,7 +48,6 @@ interface TabletopProps {
 export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps) {
   const surface = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<string[]>([]);
-  const [openDeck, setOpenDeck] = useState<number | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [classifyOpen, setClassifyOpen] = useState(false);
   const [noteCardId, setNoteCardId] = useState<string | null>(null);
@@ -65,7 +64,6 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
     startX: number;
     startY: number;
     moved: boolean;
-    long?: number;
   } | null>(null);
   const placeIndex = useRef(0);
 
@@ -79,6 +77,33 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
     [infoCard],
   );
 
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== "Delete" && event.key !== "Backspace") {
+        return;
+      }
+      const target = event.target;
+      if (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        (target instanceof HTMLElement && target.isContentEditable)
+      ) {
+        return;
+      }
+      if (selected.length === 0) {
+        return;
+      }
+      event.preventDefault();
+      onBoard(selected.reduce((next, id) => removeCard(next, id), board));
+      setSelected([]);
+      setMenu(null);
+      setLinkFrom(null);
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [board, onBoard, selected]);
+
   function viewportPlace() {
     const node = surface.current;
     const left = node?.scrollLeft ?? 0;
@@ -91,10 +116,16 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
     };
   }
 
-  function placeGrid(grid: Grid) {
+  function placeGrid(grid: Grid, at?: { x: number; y: number }) {
+    if (at && surface.current) {
+      const rect = surface.current.getBoundingClientRect();
+      const x = Math.max(0, Math.min(WORK - CARD, at.x - rect.left + surface.current.scrollLeft - CARD / 2));
+      const y = Math.max(0, Math.min(WORK - CARD, at.y - rect.top + surface.current.scrollTop - CARD / 2));
+      onBoard(addCard(board, exactId(grid), x, y));
+      return;
+    }
     const point = viewportPlace();
     onBoard(addCard(board, exactId(grid), point.x, point.y));
-    setOpenDeck(null);
   }
 
   function toggleSelect(cardId: string) {
@@ -121,12 +152,6 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
       startX: event.clientX,
       startY: event.clientY,
       moved: false,
-      long: window.setTimeout(() => {
-        if (drag.current && !drag.current.moved) {
-          setMenu({ x: event.clientX, y: event.clientY, cardId });
-          drag.current = null;
-        }
-      }, 480),
     };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
@@ -142,10 +167,6 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
       return;
     }
     state.moved = true;
-    if (state.long) {
-      window.clearTimeout(state.long);
-      state.long = undefined;
-    }
     let next = board;
     for (const id of state.ids) {
       const start = state.origin.get(id);
@@ -159,9 +180,6 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
 
   function onCardPointerUp(event: React.PointerEvent, cardId: string) {
     const state = drag.current;
-    if (state?.long) {
-      window.clearTimeout(state.long);
-    }
     if (state && !state.moved) {
       toggleSelect(cardId);
     } else if (state?.moved && !selected.includes(cardId)) {
@@ -318,17 +336,28 @@ export function Tabletop({ board, research, onBoard, onResearch }: TabletopProps
                     }}
                   />
                 )}
+                {active && (
+                  <button
+                    type="button"
+                    className="card-plus"
+                    aria-label="Card actions"
+                    onPointerDown={(event) => event.stopPropagation()}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      const rect = event.currentTarget.getBoundingClientRect();
+                      setMenu({ x: rect.left, y: rect.bottom + 6, cardId: card.id });
+                    }}
+                  >
+                    +
+                  </button>
+                )}
               </article>
             );
           })}
         </div>
       </div>
 
-      <DeckBar
-        openDeck={openDeck}
-        onToggleDeck={(occupancy) => setOpenDeck((current) => (current === occupancy ? null : occupancy))}
-        onPlace={placeGrid}
-      />
+      <DeckBar onPlace={placeGrid} />
 
       {importError && <p className="error">{importError}</p>}
       <input
