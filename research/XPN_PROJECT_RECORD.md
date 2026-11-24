@@ -310,6 +310,8 @@ Of the 256 rules, the two-step map closes on the even sublattice for 28. Twelve 
 
 **Deferred note, not a task.** The 3D version of the gradient-change detection — the slope-jump scan, the horizon-window growth, and the neighboring-region comparison, applied to 3D cellular automata — is something to do eventually. It is under the same monthly-limit constraint as the 3D stride investigation. The cost is prohibited at the moment. No compute for it is authorized, and none was started. This note does not put the 3D detection on the active list.
 
+**Concept note, not a task.** The seam between systems may not be a line. It may be a transition region with width: a band where the handoff is gradual, one description fading as another rises. The rule to find may not be a threshold. It may be a gradient profile, how steeply one description fades as the other rises. This sits with the gradient-change detection above, and with the lightning notes: a channel can be one path at one scale and a branching tree of segments at a finer scale. No compute for this was started. The note does not put a search on the active list.
+
 ## Sources
 
 Drive documents copied into this folder: the Stage B prompt, predictions, and result; the Stage A Rule 110 extraction; the external-grounding proposal; the Branch 5 ruling; the need-versus-want preregistration and the four-coder sheet. Session numbers for codes, both crystal runs, Ising, and both METR-LA passes are the figures computed in the 2026-11-24 session and printed above. The METR-LA csv and adjacency file remain outside the repository.
