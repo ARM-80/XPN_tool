@@ -279,6 +279,7 @@ These are open. They are not results.
 - D is specified only as a 1D radius-1 table. The four futures allowed when a need is unmet (stay, decay, rearrange, or change the need) are not forced, and decay is not encoded in the app.
 - Stage B passed on a majority of eight rules, with a capability mismatch among the predictors and a repeated miss on the Class 3 / Class 4 line. The 256-rule Stage C sample has not been run.
 - The traffic file has no weather field.
+- Beyond binary. The ternary sample in section 8 shows that the two questions still sort rows, and that keep-or-reverse does not cover the center-only maps. Whether the two-question account predicts anything further that has not been tested is open.
 
 **Resolved, 2026-11-24.** Why five domains match the membrane pattern. This is closed. It is not a promotion.
 
@@ -295,6 +296,7 @@ The sets-of-six-and-five check was run on 2026-11-24. Items {1, 2, 3, 4, 5, 6} a
 - Keep the wider symmetry vocabulary that the second crystal run used. The square set alone is not enough for published point groups.
 - The traffic series is the first messier system in this record. It was read with the same local-neighbor question. It was not turned into an update rule inside the app.
 - The arrangement tool can keep classifying what is directly on the grid. The X–P–N layer waits until the arrangement engine is stable, and until Need, decay, and a dynamic rule are derived separately.
+- The pickup list for the 2026-11-24 session is in section 8. That section is the place to resume.
 
 ## 7. Scaled-recurrence conjecture
 
@@ -319,6 +321,57 @@ Of the 256 rules, the two-step map closes on the even sublattice for 28. Twelve 
 **Deferred note, not a task.** The 3D version of the gradient-change detection — the slope-jump scan, the horizon-window growth, and the neighboring-region comparison, applied to 3D cellular automata — is something to do eventually. It is under the same monthly-limit constraint as the 3D stride investigation. The cost is prohibited at the moment. No compute for it is authorized, and none was started. This note does not put the 3D detection on the active list.
 
 **Concept note, not a task.** The seam between systems may not be a line. It may be a transition region with width: a band where the handoff is gradual, one description fading as another rises. The rule to find may not be a threshold. It may be a gradient profile, how steeply one description fades as the other rises. This sits with the gradient-change detection above, and with the lightning notes: a channel can be one path at one scale and a branching tree of segments at a finer scale. No compute for this was started. The note does not put a search on the active list.
+
+## 8. Session wrap-up, 2026-11-24
+
+The seam is where one description hands off to another. That is the point of the day's work. A handoff can be a line, or it can be a band in which one description fades as the next rises.
+
+### Where we are
+
+Elementary rules are read from their truth tables. The scaled-recurrence claim is not a general law. The membrane classes are finished as a reading of rows. The two yes-or-no questions explain why five domains share that menu, and they do not force pile sizes. Ternary cells show the menu sorting rows and failing to name what the center does alone. Three-dimensional recurrence on the four Carter Bays rules lost its clock at every stride tried. The one-dimensional seam scans find the edge of the disturbed region. Further three-dimensional compute is not authorized.
+
+### What we did
+
+**Scaled recurrence.** The conjecture is recorded in section 7. A relation that recurs at two steps will reappear at a scaled magnitude. The doubling is: apply the rule twice, read every other cell. Proven inside the affine and additive families. The twelve rules that return as themselves are 0, 60, 90, 102, 150, 170, 204, 240, 153, 165, 195, and 255. Open outside those families: no positive range of non-affine rules is established. Falsified as a general law. The counterexample range is the non-affine rules under this doubling, glider rules 54 and 110 included, and the blinkers 29 and 71 at 2 of 130.
+
+**Six-and-five, and the outside look.** These amended the five-domain answer in section 5. Pascal's triangle counts balanced cuts. It does not say every yes-no rule is balanced. On six items, even, the lower half, and the bit test write 3+3. Greater than 4 writes 2+4. Twenty of the sixty-four yes-sets are 3+3. On five, an equal split is impossible, and 2+3 is not required. Residue mod 3 writes 2+2+2, which a yes-no rule cannot. Outside the five domains, the same four-cell shape appears with other labels: the square of opposition, and a confusion matrix. It fails where a choice has three outcomes: ABO blood types, the three states of an epidemic, and a three-fold axis. Aristotle's four causes are four entries that are not two yes-or-no questions.
+
+**Membrane classes.** Environment, transformation, reflection, and self-only inversion are read off each truth-table row. Neighbor flip and center flip either change the output or they do not. When only the center matters, the output copies it or flips it. That reading is finished. It is not a promotion. The September 2026 test on rules 90, 54, and 110 was a small sample and was not a promotion.
+
+**Two questions.** Does the surrounding enter the result? Does the center enter it? If only the center enters, keep it or reverse it. Those answers are the four classes. They are what the five domains share: the crystal and symmetry work, the Drive search partitions, Pascal's triangle as the count, the September split of environment versus rule, and the membrane test on the 256 elementary rules. Locality is not the cause. Rule 90 sits entirely inside environment.
+
+**Ternary.** Three states per cell. Four hundred random radius-1 rules, plus twenty rules that read only the center. A part enters when the output is not the same for every value of that part, and both nonzero states count. The two questions still sort rows: in the random sample, 9455 of 10800 rows are transformation, 1200 are environment, 21 are dead, and 124 are center-only. The four names do not cover the center-only case. Of those 124 rows, 57 keep the center, 20 are the mirror reverse, and 47 are another shift. Of the twenty center-only rules, one is keep, two are constants, and seventeen are unnamed: fourteen collapses, a swap of 0 with 1, a swap of 1 with 2, and a cycle that adds 1 mod 3. A cycle comes back in three steps. A collapse sends two centers to one output. A binary cell cannot do either.
+
+**Bays rules, strides 2, 3, and 4.** Carter Bays' four 26-neighbor rules, 4555, 5766, 5655, and 6855, were each read at those strides. All four lose the clock at every stride. The skipped cells are what the center's next state uses. The 10-cell period-4 glider in 4555 does not survive the stride or a doubled block. This was one hand-picked pass, not a search.
+
+**One-dimensional seams.** Same ring as the earlier scan: 401 cells, one black cell at 200, steps 100, 127, and 128. Slope, horizon, and region. The markers sit on the occupied edges. They do not sit on an affine versus non-affine cut. The distance from the leftmost marker to the rightmost is the disturbed region. It grows by about one cell per step on each live side from step 100 to step 127. Step 128 does not add another jump. Two-sided cones share a width near 210 and then near 264. One live side shares a width near 110 and then near 137. The only stable width is the blinker defect, rules 29 and 71: 9 cells on the slope scan and 4 on the horizon, at every step, which is the size of the detector.
+
+### What needs doing, and what is only a note
+
+No three-dimensional compute is authorized. The 3D stride investigation and the 3D gradient scans stay deferred under the monthly cost limit. The intended form, when the cost allows, is small runs scheduled across the month so they stay inside that limit. That is a note, not a task, and it does not start a run.
+
+The concept note stands. A seam may be a band with width. The thing to find may be a gradient profile, how steeply one description fades as the other rises, not a threshold. The lightning notes sit with this: a channel can be one path at one scale and a branching tree at a finer scale.
+
+### Branches to close out
+
+Closed as inquiry lines, not as promotions: scaled recurrence as a general law; the membrane classes as a row reading; the question of why the five domains share that menu, after the size amendment. The four Bays rules are done for strides 2, 3, and 4. The one-dimensional seam pass on the rules named above is done.
+
+Still open, and not closed by this note: anything non-affine under a scaling other than the doubling in section 7; the Class 3 / Class 4 sample in section 6; whether the two-question account predicts anything further beyond the binary menu and the ternary sample; the 3D work held for cost.
+
+Today's notes are on the branch `cursor/scaled-recurrence-spec-c789`. The earlier record branch `cursor/xpn-research-record-c789` still says the membrane test is a sample waiting to be expanded. That line is superseded by the row reading in this file.
+
+### Questions still to answer
+
+- Does the two-question account predict anything that has not been tested, past the binary menu and this ternary sample?
+- Does the gradient profile have a shape worth naming, or is the band just the disturbed region plus the width of the detector?
+- When cost allows, do small scheduled 3D runs recover a clock the four Bays strides lost, or do they keep losing it?
+
+### Next, when this is picked up
+
+- The six-and-five test was run today. The result is in section 5. Rerun it only if the items or the rules change.
+- A first look outside the five domains is in this section. A wider search is still open.
+- Try the ternary menu on a larger sample.
+- Consider whether the gradient-profile question has a shape worth naming.
 
 ## Sources
 
