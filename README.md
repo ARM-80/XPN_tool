@@ -53,3 +53,9 @@ npm run build
 4. Browse/filter the complete arrangement space (up to 512 raw 3×3 states).
 5. Add relationship links between arrangements.
 6. Add the X–P–N research layer only after the arrangement engine is stable.
+
+## Research record
+
+External-grounding notes, the blinded classification prompt, and the test record live in [`research/`](research/README.md).
+
+Those notes do not change the boundary above. The app must not infer that a difference is a Need, and it must not encode decay, repulsion, or a dynamic rule until those are separately derived in the research.

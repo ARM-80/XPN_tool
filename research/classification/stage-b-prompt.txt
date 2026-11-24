@@ -1,0 +1,73 @@
+XPN BRANCH 5 — CANDIDATE 1, STAGE B (BLINDED RE-RUN)
+======================================================
+
+CONTEXT (all you need — no external documents required):
+
+XPN is a formal framework built around a state X, a dynamic update rule D,
+and an invariance concept κ (kappa) describing what structure is preserved
+or transformed as X evolves under D.
+
+For this task, X is a 1-dimensional row of binary cells (0 or 1). D is a
+"radius-1" rule: the next value of each cell depends only on itself and its
+two immediate neighbors (left, center, right). This is the same structure
+used by elementary cellular automata.
+
+κ, for this task, should be treated qualitatively as: the degree and kind
+of local structure preserved through D — e.g. whether a cell's value
+persists, whether isolated patterns propagate, whether structure collapses
+toward a single fixed state, whether it dissolves into unpredictable
+change, or whether preservation and transformation coexist and interact.
+
+TASK:
+
+For each of the 8 rules below, you are given its transition table (which
+neighborhood patterns produce which next-cell value). Using ONLY the D/κ
+reasoning described above — not any outside knowledge of "elementary
+cellular automata classification," "Wolfram," "Rule 30," "Rule 110," or
+any named rule numbers you may already know — classify each rule's likely
+long-run qualitative behavior into ONE of these four categories:
+
+  Class 1 — Homogeneous: converges to a single uniform state.
+  Class 2 — Periodic: settles into simple repeating/stable local patterns.
+  Class 3 — Chaotic: produces unpredictable, non-repeating, disordered change.
+  Class 4 — Complex: sustained mix of stable structures and propagating
+            change; neither uniform, simply repeating, nor pure noise.
+
+IMPORTANT CONSTRAINTS:
+- Do not search the web or consult any external source.
+- Do not rely on prior memorized knowledge of "Wolfram's classification"
+  or named rule numbers — reason only from the transition table given.
+- Show brief reasoning per rule (why the D/κ structure points to that
+  class), then give one class per rule.
+- Do not guess based on the rule's numeric label — reason from the table.
+
+RULE A — transition table (L,C,R -> next):
+111->0, 110->0, 101->0, 100->0, 011->0, 010->0, 001->0, 000->0
+
+RULE B — transition table (L,C,R -> next):
+111->0, 110->0, 101->1, 100->0, 011->0, 010->0, 001->0, 000->0
+
+RULE C — transition table (L,C,R -> next):
+111->0, 110->0, 101->0, 100->0, 011->0, 010->1, 001->0, 000->0
+
+RULE D_r1 — transition table (L,C,R -> next):
+111->0, 110->1, 101->1, 100->0, 011->1, 010->1, 001->0, 000->0
+
+RULE E — transition table (L,C,R -> next):
+111->0, 110->0, 101->0, 100->1, 011->1, 010->1, 001->1, 000->0
+
+RULE F — transition table (L,C,R -> next):
+111->0, 110->1, 101->0, 100->1, 011->1, 010->0, 001->1, 000->0
+
+RULE G — transition table (L,C,R -> next):
+111->0, 110->1, 101->1, 100->0, 011->1, 010->1, 001->1, 000->0
+
+RULE H — transition table (L,C,R -> next):
+111->0, 110->0, 101->1, 100->1, 011->0, 010->1, 001->1, 000->0
+
+OUTPUT FORMAT:
+For each rule (A through H), give:
+  1. One or two sentences of D/κ reasoning.
+  2. Final classification: Class 1, 2, 3, or 4.
+
+Return only this analysis. Do not create, save, or upload any file.
