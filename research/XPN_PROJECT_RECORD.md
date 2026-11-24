@@ -306,6 +306,8 @@ Of the 256 rules, the two-step map closes on the even sublattice for 28. Twelve 
 
 **Boundary.** Proven inside the affine and additive families, for this doubling on elementary rules. Open outside them: no positive range of non-affine rules is established. Falsified as a general law for arbitrary rules. The counterexample range is the non-affine rules under this doubling, glider rules 54 and 110 included, and the blinkers 29 and 71 at 2 of 130.
 
+**Deferred note, not a task.** A 3D nonlinear recurrence investigation, scheduled as small runs spread across a month so the work stays inside monthly usage limits, is something to do eventually. The cost is prohibited at the moment. No compute for it is authorized. This note does not put the investigation on the active list. The membrane split in section 6 remains the live lead.
+
 ## Sources
 
 Drive documents copied into this folder: the Stage B prompt, predictions, and result; the Stage A Rule 110 extraction; the external-grounding proposal; the Branch 5 ruling; the need-versus-want preregistration and the four-coder sheet. Session numbers for codes, both crystal runs, Ising, and both METR-LA passes are the figures computed in the 2026-11-24 session and printed above. The METR-LA csv and adjacency file remain outside the repository.
