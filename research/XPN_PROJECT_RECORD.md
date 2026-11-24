@@ -283,6 +283,7 @@ These are open. They are not results.
 ## 6. Next steps already on the table
 
 - A capability-matched repeat of the eight-rule classification, and a pass on the Class 3 / Class 4 boundary, before a 256-rule sample.
+- Expand the membrane test — the environment versus transformation split for resolving the complex versus chaotic class distinction — to a larger sample of cellular automaton rules beyond the three already tested (rule 90, rule 54, and rule 110). The September 2026 test was a small sample and was not a promotion.
 - Keep the wider symmetry vocabulary that the second crystal run used. The square set alone is not enough for published point groups.
 - The traffic series is the first messier system in this record. It was read with the same local-neighbor question. It was not turned into an update rule inside the app.
 - The arrangement tool can keep classifying what is directly on the grid. The X–P–N layer waits until the arrangement engine is stable, and until Need, decay, and a dynamic rule are derived separately.
