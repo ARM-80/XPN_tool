@@ -279,18 +279,19 @@ These are open. They are not results.
 - D is specified only as a 1D radius-1 table. The four futures allowed when a need is unmet (stay, decay, rearrange, or change the need) are not forced, and decay is not encoded in the app.
 - Stage B passed on a majority of eight rules, with a capability mismatch among the predictors and a repeated miss on the Class 3 / Class 4 line. The 256-rule Stage C sample has not been run.
 - The traffic file has no weather field.
+- Membrane classes across domains. The four classes are finished: environment, transformation, reflection, and self-only inversion. Each class is read directly off a row of the rule's truth table. A neighbor flip and a center flip either change the output or they do not, and when only the center matters the output either copies it or flips it. That reading is not a further test, and it is not a promotion. What remains open is why five separate domains land on that same pattern. The five are the crystal and symmetry work (the square's eight operations, and the three-fold axes of salt and quartz), the Drive search partitions (the same visible split from different rules; at six, three rules all write three plus three), Pascal's triangle as the count, the September 2026 split of environment versus rule, and the membrane test across the 256 elementary rules. No compute is authorized for the question.
 
 ## 6. Next steps already on the table
 
 - A capability-matched repeat of the eight-rule classification, and a pass on the Class 3 / Class 4 boundary, before a 256-rule sample.
-- Expand the membrane test — the environment versus transformation split for resolving the complex versus chaotic class distinction — to a larger sample of cellular automaton rules beyond the three already tested (rule 90, rule 54, and rule 110). The September 2026 test was a small sample and was not a promotion. That membrane split remains the separate live lead. The scaled-recurrence conjecture in section 7 is a different claim, recorded with its counterexample range. It does not replace this lead.
+- The membrane classification is finished. Environment, transformation, reflection, and self-only inversion are read off each truth-table row, as the open question in section 5 records. The September 2026 test on rules 90, 54, and 110 was a small sample and was not a promotion. Finishing the row-reading does not promote it. The open remainder is why the five domains share that pattern, not another classification run. The scaled-recurrence conjecture in section 7 is a different claim, recorded with its counterexample range. It does not replace this question.
 - Keep the wider symmetry vocabulary that the second crystal run used. The square set alone is not enough for published point groups.
 - The traffic series is the first messier system in this record. It was read with the same local-neighbor question. It was not turned into an update rule inside the app.
 - The arrangement tool can keep classifying what is directly on the grid. The X–P–N layer waits until the arrangement engine is stable, and until Need, decay, and a dynamic rule are derived separately.
 
 ## 7. Scaled-recurrence conjecture
 
-Filed 2026-11-24. This is a conjecture with a known counterexample range. It is not a universal law, and it is not a promotion. The membrane split in section 6 remains the separate live lead.
+Filed 2026-11-24. This is a conjecture with a known counterexample range. It is not a universal law, and it is not a promotion. The membrane classes are finished, as section 6 records. Why five domains share that pattern is a separate open question, in section 5.
 
 **Prediction.** A relation that recurs at two steps will reappear at a scaled magnitude.
 
@@ -306,7 +307,7 @@ Of the 256 rules, the two-step map closes on the even sublattice for 28. Twelve 
 
 **Boundary.** Proven inside the affine and additive families, for this doubling on elementary rules. Open outside them: no positive range of non-affine rules is established. Falsified as a general law for arbitrary rules. The counterexample range is the non-affine rules under this doubling, glider rules 54 and 110 included, and the blinkers 29 and 71 at 2 of 130.
 
-**Deferred note, not a task.** A 3D nonlinear recurrence investigation, scheduled as small runs spread across a month so the work stays inside monthly usage limits, is something to do eventually. The cost is prohibited at the moment. No compute for it is authorized. This note does not put the investigation on the active list. The membrane split in section 6 remains the live lead.
+**Deferred note, not a task.** A 3D nonlinear recurrence investigation, scheduled as small runs spread across a month so the work stays inside monthly usage limits, is something to do eventually. The cost is prohibited at the moment. No compute for it is authorized. This note does not put the investigation on the active list. The membrane classes are finished. The open question is why five domains share that pattern, and it stays in section 5.
 
 **Deferred note, not a task.** The 3D version of the gradient-change detection — the slope-jump scan, the horizon-window growth, and the neighboring-region comparison, applied to 3D cellular automata — is something to do eventually. It is under the same monthly-limit constraint as the 3D stride investigation. The cost is prohibited at the moment. No compute for it is authorized, and none was started. This note does not put the 3D detection on the active list.
 
