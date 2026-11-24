@@ -283,10 +283,28 @@ These are open. They are not results.
 ## 6. Next steps already on the table
 
 - A capability-matched repeat of the eight-rule classification, and a pass on the Class 3 / Class 4 boundary, before a 256-rule sample.
-- Expand the membrane test — the environment versus transformation split for resolving the complex versus chaotic class distinction — to a larger sample of cellular automaton rules beyond the three already tested (rule 90, rule 54, and rule 110). The September 2026 test was a small sample and was not a promotion.
+- Expand the membrane test — the environment versus transformation split for resolving the complex versus chaotic class distinction — to a larger sample of cellular automaton rules beyond the three already tested (rule 90, rule 54, and rule 110). The September 2026 test was a small sample and was not a promotion. That membrane split remains the separate live lead. The scaled-recurrence conjecture in section 7 is a different claim, recorded with its counterexample range. It does not replace this lead.
 - Keep the wider symmetry vocabulary that the second crystal run used. The square set alone is not enough for published point groups.
 - The traffic series is the first messier system in this record. It was read with the same local-neighbor question. It was not turned into an update rule inside the app.
 - The arrangement tool can keep classifying what is directly on the grid. The X–P–N layer waits until the arrangement engine is stable, and until Need, decay, and a dynamic rule are derived separately.
+
+## 7. Scaled-recurrence conjecture
+
+Filed 2026-11-24. This is a conjecture with a known counterexample range. It is not a universal law, and it is not a promotion. The membrane split in section 6 remains the separate live lead.
+
+**Prediction.** A relation that recurs at two steps will reappear at a scaled magnitude.
+
+**Data.** An elementary radius-1 rule, written as its eight-row lookup. The two-step relation is the second iterate: the center cell after two applications. That cell depends on a five-cell neighborhood, and the thirty-two neighborhoods of that radius are the whole test for this family. For the pattern reading, the data are the states on a ring of eight cells that return after two steps and not after one, and the ring made by writing each of those cells twice.
+
+**Scaling operation.** The doubling used for rule 90. Apply the rule twice, then read every other cell. If the value on the even cells depends only on the even cells, those three even cells are an elementary neighborhood and the reading is an elementary rule. The magnitude is two. A pair projection was run as a check only: non-overlapping pairs, each pair read as one bit, evolved two steps. It was not a second pass/fail cut.
+
+**Pass and fail.** Pass: the rule read on every other cell after two steps is the original rule, or the same rule under reflection or complement. Fail: the even-cell value still depends on an odd cell, or the induced rule is a different rule. On the pattern reading, pass means the doubled ring returns after two steps under the same rule, and fail means it does not. Exact closure is required. A partial agreement is a miss.
+
+**Known results.** The 2026-11-24 run used this doubling on all 256 elementary rules. Same-rule return holds for twelve rules, and all twelve are affine. The additive family is included: 0, 60, 90, 102, 150, 170, 204, and 240, together with the affine rules 153, 165, 195, and 255. Rules 90, 150, and 60 return as themselves. Same-rule return fails for every non-affine elementary rule. That includes the glider rules 54, 110, 124, 137, and 193. Rules 124, 137, and 193 are the symmetry class of 110, so they are one case. Rules 29 and 71 blink on the whole ring every two steps, and they are not affine. After each cell is doubled, that blink survives in 2 of 130 copies.
+
+Of the 256 rules, the two-step map closes on the even sublattice for 28. Twelve survive as themselves, all affine. Sixteen transform into a different rule. Twelve of those sixteen are not affine, and the rule they land on usually freezes or dies. The other 228 do not close. Doubling a state that was not already period 2 did not manufacture a two-step recurrence for rules 30, 45, or 110.
+
+**Boundary.** Proven inside the affine and additive families, for this doubling on elementary rules. Open outside them: no positive range of non-affine rules is established. Falsified as a general law for arbitrary rules. The counterexample range is the non-affine rules under this doubling, glider rules 54 and 110 included, and the blinkers 29 and 71 at 2 of 130.
 
 ## Sources
 
